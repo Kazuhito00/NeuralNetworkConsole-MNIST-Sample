@@ -74,8 +74,9 @@ Neural Network Consoleのプロジェクトファイルです。
 
 # Model
 モデル構造は以下の通りです。<br>
-* 自動探索開始時<br><img src="https://user-images.githubusercontent.com/37477845/114304413-e4c61900-9b0d-11eb-9251-1e1e22ccb39f.png" width="40%">
-* 自動探索実施後に性能が良かったもの<br><img src="https://user-images.githubusercontent.com/37477845/114304430-06270500-9b0e-11eb-92b5-4af0aac8f2a5.png" width="40%">　<img src="https://user-images.githubusercontent.com/37477845/114304451-29ea4b00-9b0e-11eb-8c7a-51518df62804.png" width="40%">
+* 自動探索開始時<br><img src="https://user-images.githubusercontent.com/37477845/114304517-8d747880-9b0e-11eb-8821-cfa8778647bb.png" width="70%">
+* 自動探索実施後に性能が良かったもの<br><img src="https://user-images.githubusercontent.com/37477845/114304430-06270500-9b0e-11eb-92b5-4af0aac8f2a5.png" width="70%">
+* 自動探索実施後に性能が良かったもの<br><img src="https://user-images.githubusercontent.com/37477845/114304451-29ea4b00-9b0e-11eb-8c7a-51518df62804.png" width="70%">
 
 
 # Author
