@@ -82,5 +82,5 @@ Neural Network Consoleのプロジェクトファイルです。
 高橋かずひと(https://twitter.com/KzhtTkhs)
 
 # License 
-Single-Hand-Localization is under [Apache v2 License](LICENSE).
+NeuralNetworkConsole-MNIST-Sample is under [Apache v2 License](LICENSE).
 
