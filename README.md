@@ -42,21 +42,27 @@
 
 ### 01_create_dataset.py
 データセット作成用のスクリプトです。<br>
-01.original_dataのデータをNeural Network Consoleに読み込める形にします。
+MNISTデータセットをダウンロードし、02.dataに格納します。
 
-### 04_inference.ipynb
+### 05_inference_sample.ipynb
 モデル推論用のスクリプトです。<br>
-Neural Network ConsoleからエクスポートしたONNXファイルを用いて推論を行い、submission.csvを作成します。
+Neural Network ConsoleからエクスポートしたONNXファイルを用いて推論を行うサンプルです。
 
 ### 01.original_data
-Kaggle Titanicの[データセット](https://www.kaggle.com/c/titanic/data)です。
+01_create_dataset.py実行時に、MNISTデータセット(解凍前)を格納するディレクトリです。
 
 ### 02.data
-01_create_dataset.pyを用いて前処理を行いNeural Network Consoleで読み込める形にしたデータセットです。
+01_create_dataset.py実行時に、回答したデータセットを格納するディレクトリです。
 
 ### 03-01.nnc_train_data
+Neural Network Console用の学習データを格納するディレクトリです。<br>
+Neural Network Consoleで「データセットを作成」し、出力ディレクトリに指定してください。<br>
+<img src="https://user-images.githubusercontent.com/37477845/114304248-2b674380-9b0d-11eb-9071-e3a96385c0be.png" width="70%">
 
 ### 03-02.nnc_test_data
+Neural Network Console用の検証データを格納するディレクトリです。<br>
+Neural Network Consoleで「データセットを作成」し、出力ディレクトリに指定してください。<br>
+<img src="https://user-images.githubusercontent.com/37477845/114304313-6d908500-9b0d-11eb-8f3b-d7b1d0c3248e.png" width="70%">
 
 ### 04.nnc_project
 Neural Network Consoleのプロジェクトファイルです。
@@ -68,8 +74,9 @@ Neural Network Consoleのプロジェクトファイルです。
 
 # Model
 モデル構造は以下の通りです。<br>
-* 自動探索開始時<br><img src="https://user-images.githubusercontent.com/37477845/114264511-5cb91400-9a26-11eb-97ae-99a983481698.png" width="40%">
-* 自動探索実施後に性能が良かったもの<br><img src="https://user-images.githubusercontent.com/37477845/114264502-4ca13480-9a26-11eb-86f9-a1f3080ee28f.png" width="40%">
+* 自動探索開始時<br><img src="https://user-images.githubusercontent.com/37477845/114304413-e4c61900-9b0d-11eb-9251-1e1e22ccb39f.png" width="40%">
+* 自動探索実施後に性能が良かったもの<br><img src="https://user-images.githubusercontent.com/37477845/114304430-06270500-9b0e-11eb-92b5-4af0aac8f2a5.png" width="40%">　<img src="https://user-images.githubusercontent.com/37477845/114304451-29ea4b00-9b0e-11eb-8c7a-51518df62804.png" width="40%">
+
 
 # Author
 高橋かずひと(https://twitter.com/KzhtTkhs)
