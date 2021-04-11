@@ -1,0 +1,1170 @@
+global_config {
+  default_context {
+    array_class: "CudaCachedArray"
+    device_id: "0"
+    backends: "cudnn:float"
+    backends: "cuda:float"
+    backends: "cpu:float"
+  }
+}
+training_config {
+  max_epoch: 100
+  iter_per_epoch: 937
+  save_best: true
+  monitor_interval: 10
+}
+network {
+  name: "Main"
+  batch_size: 64
+  variable {
+    name: "Input"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 28 dim: 28 }
+  }
+  variable {
+    name: "DepthwiseConvolution/depthwise_conv/W"
+    type: "Parameter"
+    shape: { dim: 1 dim: 4 dim: 4 }
+    initializer {
+      type: "NormalConvolutionGlorot"
+      multiplier: 1
+    }
+  }
+  variable {
+    name: "DepthwiseConvolution/depthwise_conv/b"
+    type: "Parameter"
+    shape: { dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization_2/bn/beta"
+    type: "Parameter"
+    shape: { dim: 1 dim: 1 dim: 1 dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization_2/bn/gamma"
+    type: "Parameter"
+    shape: { dim: 1 dim: 1 dim: 1 dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 1
+    }
+  }
+  variable {
+    name: "BatchNormalization_2/bn/mean"
+    type: "Parameter"
+    shape: { dim: 1 dim: 1 dim: 1 dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization_2/bn/var"
+    type: "Parameter"
+    shape: { dim: 1 dim: 1 dim: 1 dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "PReLU/prelu/slope"
+    type: "Parameter"
+    shape: { dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0.25
+    }
+  }
+  variable {
+    name: "Convolution/conv/W"
+    type: "Parameter"
+    shape: { dim: 1 dim: 1 dim: 3 dim: 3 }
+    initializer {
+      type: "NormalConvolutionGlorot"
+      multiplier: 1
+    }
+  }
+  variable {
+    name: "Convolution/conv/b"
+    type: "Parameter"
+    shape: { dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "Affine/affine/W"
+    type: "Parameter"
+    shape: { dim: 169 dim: 10 }
+    initializer {
+      type: "NormalAffineGlorot"
+      multiplier: 1
+    }
+  }
+  variable {
+    name: "Affine/affine/b"
+    type: "Parameter"
+    shape: { dim: 10 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization/bn/beta"
+    type: "Parameter"
+    shape: { dim: 1 dim: 10 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization/bn/gamma"
+    type: "Parameter"
+    shape: { dim: 1 dim: 10 }
+    initializer {
+      type: "Constant"
+      multiplier: 1
+    }
+  }
+  variable {
+    name: "BatchNormalization/bn/mean"
+    type: "Parameter"
+    shape: { dim: 1 dim: 10 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization/bn/var"
+    type: "Parameter"
+    shape: { dim: 1 dim: 10 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "CategoricalCrossEntropy_T"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 }
+  }
+  variable {
+    name: "Swish"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 28 dim: 28 }
+  }
+  variable {
+    name: "DepthwiseConvolution"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 27 dim: 27 }
+  }
+  variable {
+    name: "BatchNormalization_2"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 27 dim: 27 }
+  }
+  variable {
+    name: "PReLU"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 27 dim: 27 }
+  }
+  variable {
+    name: "Convolution"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 27 dim: 27 }
+  }
+  variable {
+    name: "MaxPooling_2"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 13 dim: 13 }
+  }
+  variable {
+    name: "Affine"
+    type: "Buffer"
+    shape: { dim:-1 dim: 10 }
+  }
+  variable {
+    name: "BatchNormalization"
+    type: "Buffer"
+    shape: { dim:-1 dim: 10 }
+  }
+  variable {
+    name: "Softmax"
+    type: "Buffer"
+    shape: { dim:-1 dim: 10 }
+  }
+  variable {
+    name: "CategoricalCrossEntropy"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 }
+  }
+  function {
+    name: "Swish"
+    type: "Swish"
+    input: "Input"
+    output: "Swish"
+  }
+  function {
+    name: "DepthwiseConvolution"
+    type: "DepthwiseConvolution"
+    input: "Swish"
+    input: "DepthwiseConvolution/depthwise_conv/W"
+    input: "DepthwiseConvolution/depthwise_conv/b"
+    output: "DepthwiseConvolution"
+    depthwise_convolution_param {
+      pad: { dim: 1 dim: 1 }
+      stride: { dim: 1 dim: 1 }
+      dilation: { dim: 1 dim: 1 }
+      multiplier: 1
+      base_axis: 1
+    }
+  }
+  function {
+    name: "BatchNormalization_2"
+    type: "BatchNormalization"
+    input: "DepthwiseConvolution"
+    input: "BatchNormalization_2/bn/beta"
+    input: "BatchNormalization_2/bn/gamma"
+    input: "BatchNormalization_2/bn/mean"
+    input: "BatchNormalization_2/bn/var"
+    output: "BatchNormalization_2"
+    batch_normalization_param {
+      axes: 1
+      decay_rate: 0.9
+      eps: 0.0001
+      batch_stat: True
+    }
+  }
+  function {
+    name: "PReLU"
+    type: "PReLU"
+    input: "BatchNormalization_2"
+    input: "PReLU/prelu/slope"
+    output: "PReLU"
+    prelu_param {
+      base_axis: 1
+    }
+  }
+  function {
+    name: "Convolution"
+    type: "Convolution"
+    input: "PReLU"
+    input: "Convolution/conv/W"
+    input: "Convolution/conv/b"
+    output: "Convolution"
+    convolution_param {
+      pad: { dim: 1 dim: 1 }
+      stride: { dim: 1 dim: 1 }
+      dilation: { dim: 1 dim: 1 }
+      group: 1
+      channel_last: false
+      base_axis: 1
+    }
+  }
+  function {
+    name: "MaxPooling_2"
+    type: "MaxPooling"
+    input: "Convolution"
+    output: "MaxPooling_2"
+    max_pooling_param {
+      kernel: { dim: 2 dim: 2 }
+      stride: { dim: 2 dim: 2 }
+      ignore_border: true
+      pad: { dim: 0 dim: 0 }
+      channel_last: false
+    }
+  }
+  function {
+    name: "Affine"
+    type: "Affine"
+    input: "MaxPooling_2"
+    input: "Affine/affine/W"
+    input: "Affine/affine/b"
+    output: "Affine"
+    affine_param {
+      base_axis: 1
+    }
+  }
+  function {
+    name: "BatchNormalization"
+    type: "BatchNormalization"
+    input: "Affine"
+    input: "BatchNormalization/bn/beta"
+    input: "BatchNormalization/bn/gamma"
+    input: "BatchNormalization/bn/mean"
+    input: "BatchNormalization/bn/var"
+    output: "BatchNormalization"
+    batch_normalization_param {
+      axes: 1
+      decay_rate: 0.9
+      eps: 0.0001
+      batch_stat: True
+    }
+  }
+  function {
+    name: "Softmax"
+    type: "Softmax"
+    input: "BatchNormalization"
+    output: "Softmax"
+    softmax_param {
+      axis: 1
+    }
+  }
+  function {
+    name: "CategoricalCrossEntropy"
+    type: "CategoricalCrossEntropy"
+    input: "Softmax"
+    input: "CategoricalCrossEntropy_T"
+    output: "CategoricalCrossEntropy"
+    categorical_cross_entropy_param {
+      axis: 1
+    }
+  }
+}
+network {
+  name: "MainValidation"
+  batch_size: 64
+  variable {
+    name: "Input"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 28 dim: 28 }
+  }
+  variable {
+    name: "DepthwiseConvolution/depthwise_conv/W"
+    type: "Parameter"
+    shape: { dim: 1 dim: 4 dim: 4 }
+    initializer {
+      type: "NormalConvolutionGlorot"
+      multiplier: 1
+    }
+  }
+  variable {
+    name: "DepthwiseConvolution/depthwise_conv/b"
+    type: "Parameter"
+    shape: { dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization_2/bn/beta"
+    type: "Parameter"
+    shape: { dim: 1 dim: 1 dim: 1 dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization_2/bn/gamma"
+    type: "Parameter"
+    shape: { dim: 1 dim: 1 dim: 1 dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 1
+    }
+  }
+  variable {
+    name: "BatchNormalization_2/bn/mean"
+    type: "Parameter"
+    shape: { dim: 1 dim: 1 dim: 1 dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization_2/bn/var"
+    type: "Parameter"
+    shape: { dim: 1 dim: 1 dim: 1 dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "PReLU/prelu/slope"
+    type: "Parameter"
+    shape: { dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0.25
+    }
+  }
+  variable {
+    name: "Convolution/conv/W"
+    type: "Parameter"
+    shape: { dim: 1 dim: 1 dim: 3 dim: 3 }
+    initializer {
+      type: "NormalConvolutionGlorot"
+      multiplier: 1
+    }
+  }
+  variable {
+    name: "Convolution/conv/b"
+    type: "Parameter"
+    shape: { dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "Affine/affine/W"
+    type: "Parameter"
+    shape: { dim: 169 dim: 10 }
+    initializer {
+      type: "NormalAffineGlorot"
+      multiplier: 1
+    }
+  }
+  variable {
+    name: "Affine/affine/b"
+    type: "Parameter"
+    shape: { dim: 10 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization/bn/beta"
+    type: "Parameter"
+    shape: { dim: 1 dim: 10 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization/bn/gamma"
+    type: "Parameter"
+    shape: { dim: 1 dim: 10 }
+    initializer {
+      type: "Constant"
+      multiplier: 1
+    }
+  }
+  variable {
+    name: "BatchNormalization/bn/mean"
+    type: "Parameter"
+    shape: { dim: 1 dim: 10 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization/bn/var"
+    type: "Parameter"
+    shape: { dim: 1 dim: 10 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "CategoricalCrossEntropy_T"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 }
+  }
+  variable {
+    name: "Swish"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 28 dim: 28 }
+  }
+  variable {
+    name: "DepthwiseConvolution"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 27 dim: 27 }
+  }
+  variable {
+    name: "BatchNormalization_2"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 27 dim: 27 }
+  }
+  variable {
+    name: "PReLU"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 27 dim: 27 }
+  }
+  variable {
+    name: "Convolution"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 27 dim: 27 }
+  }
+  variable {
+    name: "MaxPooling_2"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 13 dim: 13 }
+  }
+  variable {
+    name: "Affine"
+    type: "Buffer"
+    shape: { dim:-1 dim: 10 }
+  }
+  variable {
+    name: "BatchNormalization"
+    type: "Buffer"
+    shape: { dim:-1 dim: 10 }
+  }
+  variable {
+    name: "Softmax"
+    type: "Buffer"
+    shape: { dim:-1 dim: 10 }
+  }
+  variable {
+    name: "CategoricalCrossEntropy"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 }
+  }
+  function {
+    name: "Swish"
+    type: "Swish"
+    input: "Input"
+    output: "Swish"
+  }
+  function {
+    name: "DepthwiseConvolution"
+    type: "DepthwiseConvolution"
+    input: "Swish"
+    input: "DepthwiseConvolution/depthwise_conv/W"
+    input: "DepthwiseConvolution/depthwise_conv/b"
+    output: "DepthwiseConvolution"
+    depthwise_convolution_param {
+      pad: { dim: 1 dim: 1 }
+      stride: { dim: 1 dim: 1 }
+      dilation: { dim: 1 dim: 1 }
+      multiplier: 1
+      base_axis: 1
+    }
+  }
+  function {
+    name: "BatchNormalization_2"
+    type: "BatchNormalization"
+    input: "DepthwiseConvolution"
+    input: "BatchNormalization_2/bn/beta"
+    input: "BatchNormalization_2/bn/gamma"
+    input: "BatchNormalization_2/bn/mean"
+    input: "BatchNormalization_2/bn/var"
+    output: "BatchNormalization_2"
+    batch_normalization_param {
+      axes: 1
+      decay_rate: 0.9
+      eps: 0.0001
+      batch_stat: False
+    }
+  }
+  function {
+    name: "PReLU"
+    type: "PReLU"
+    input: "BatchNormalization_2"
+    input: "PReLU/prelu/slope"
+    output: "PReLU"
+    prelu_param {
+      base_axis: 1
+    }
+  }
+  function {
+    name: "Convolution"
+    type: "Convolution"
+    input: "PReLU"
+    input: "Convolution/conv/W"
+    input: "Convolution/conv/b"
+    output: "Convolution"
+    convolution_param {
+      pad: { dim: 1 dim: 1 }
+      stride: { dim: 1 dim: 1 }
+      dilation: { dim: 1 dim: 1 }
+      group: 1
+      channel_last: false
+      base_axis: 1
+    }
+  }
+  function {
+    name: "MaxPooling_2"
+    type: "MaxPooling"
+    input: "Convolution"
+    output: "MaxPooling_2"
+    max_pooling_param {
+      kernel: { dim: 2 dim: 2 }
+      stride: { dim: 2 dim: 2 }
+      ignore_border: true
+      pad: { dim: 0 dim: 0 }
+      channel_last: false
+    }
+  }
+  function {
+    name: "Affine"
+    type: "Affine"
+    input: "MaxPooling_2"
+    input: "Affine/affine/W"
+    input: "Affine/affine/b"
+    output: "Affine"
+    affine_param {
+      base_axis: 1
+    }
+  }
+  function {
+    name: "BatchNormalization"
+    type: "BatchNormalization"
+    input: "Affine"
+    input: "BatchNormalization/bn/beta"
+    input: "BatchNormalization/bn/gamma"
+    input: "BatchNormalization/bn/mean"
+    input: "BatchNormalization/bn/var"
+    output: "BatchNormalization"
+    batch_normalization_param {
+      axes: 1
+      decay_rate: 0.9
+      eps: 0.0001
+      batch_stat: False
+    }
+  }
+  function {
+    name: "Softmax"
+    type: "Softmax"
+    input: "BatchNormalization"
+    output: "Softmax"
+    softmax_param {
+      axis: 1
+    }
+  }
+  function {
+    name: "CategoricalCrossEntropy"
+    type: "CategoricalCrossEntropy"
+    input: "Softmax"
+    input: "CategoricalCrossEntropy_T"
+    output: "CategoricalCrossEntropy"
+    categorical_cross_entropy_param {
+      axis: 1
+    }
+  }
+}
+network {
+  name: "MainRuntime"
+  batch_size: 64
+  variable {
+    name: "Input"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 28 dim: 28 }
+  }
+  variable {
+    name: "DepthwiseConvolution/depthwise_conv/W"
+    type: "Parameter"
+    shape: { dim: 1 dim: 4 dim: 4 }
+    initializer {
+      type: "NormalConvolutionGlorot"
+      multiplier: 1
+    }
+  }
+  variable {
+    name: "DepthwiseConvolution/depthwise_conv/b"
+    type: "Parameter"
+    shape: { dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization_2/bn/beta"
+    type: "Parameter"
+    shape: { dim: 1 dim: 1 dim: 1 dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization_2/bn/gamma"
+    type: "Parameter"
+    shape: { dim: 1 dim: 1 dim: 1 dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 1
+    }
+  }
+  variable {
+    name: "BatchNormalization_2/bn/mean"
+    type: "Parameter"
+    shape: { dim: 1 dim: 1 dim: 1 dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization_2/bn/var"
+    type: "Parameter"
+    shape: { dim: 1 dim: 1 dim: 1 dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "PReLU/prelu/slope"
+    type: "Parameter"
+    shape: { dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0.25
+    }
+  }
+  variable {
+    name: "Convolution/conv/W"
+    type: "Parameter"
+    shape: { dim: 1 dim: 1 dim: 3 dim: 3 }
+    initializer {
+      type: "NormalConvolutionGlorot"
+      multiplier: 1
+    }
+  }
+  variable {
+    name: "Convolution/conv/b"
+    type: "Parameter"
+    shape: { dim: 1 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "Affine/affine/W"
+    type: "Parameter"
+    shape: { dim: 169 dim: 10 }
+    initializer {
+      type: "NormalAffineGlorot"
+      multiplier: 1
+    }
+  }
+  variable {
+    name: "Affine/affine/b"
+    type: "Parameter"
+    shape: { dim: 10 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization/bn/beta"
+    type: "Parameter"
+    shape: { dim: 1 dim: 10 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization/bn/gamma"
+    type: "Parameter"
+    shape: { dim: 1 dim: 10 }
+    initializer {
+      type: "Constant"
+      multiplier: 1
+    }
+  }
+  variable {
+    name: "BatchNormalization/bn/mean"
+    type: "Parameter"
+    shape: { dim: 1 dim: 10 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "BatchNormalization/bn/var"
+    type: "Parameter"
+    shape: { dim: 1 dim: 10 }
+    initializer {
+      type: "Constant"
+      multiplier: 0
+    }
+  }
+  variable {
+    name: "Swish"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 28 dim: 28 }
+  }
+  variable {
+    name: "DepthwiseConvolution"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 27 dim: 27 }
+  }
+  variable {
+    name: "BatchNormalization_2"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 27 dim: 27 }
+  }
+  variable {
+    name: "PReLU"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 27 dim: 27 }
+  }
+  variable {
+    name: "Convolution"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 27 dim: 27 }
+  }
+  variable {
+    name: "MaxPooling_2"
+    type: "Buffer"
+    shape: { dim:-1 dim: 1 dim: 13 dim: 13 }
+  }
+  variable {
+    name: "Affine"
+    type: "Buffer"
+    shape: { dim:-1 dim: 10 }
+  }
+  variable {
+    name: "BatchNormalization"
+    type: "Buffer"
+    shape: { dim:-1 dim: 10 }
+  }
+  variable {
+    name: "Softmax"
+    type: "Buffer"
+    shape: { dim:-1 dim: 10 }
+  }
+  function {
+    name: "Swish"
+    type: "Swish"
+    input: "Input"
+    output: "Swish"
+  }
+  function {
+    name: "DepthwiseConvolution"
+    type: "DepthwiseConvolution"
+    input: "Swish"
+    input: "DepthwiseConvolution/depthwise_conv/W"
+    input: "DepthwiseConvolution/depthwise_conv/b"
+    output: "DepthwiseConvolution"
+    depthwise_convolution_param {
+      pad: { dim: 1 dim: 1 }
+      stride: { dim: 1 dim: 1 }
+      dilation: { dim: 1 dim: 1 }
+      multiplier: 1
+      base_axis: 1
+    }
+  }
+  function {
+    name: "BatchNormalization_2"
+    type: "BatchNormalization"
+    input: "DepthwiseConvolution"
+    input: "BatchNormalization_2/bn/beta"
+    input: "BatchNormalization_2/bn/gamma"
+    input: "BatchNormalization_2/bn/mean"
+    input: "BatchNormalization_2/bn/var"
+    output: "BatchNormalization_2"
+    batch_normalization_param {
+      axes: 1
+      decay_rate: 0.9
+      eps: 0.0001
+      batch_stat: False
+    }
+  }
+  function {
+    name: "PReLU"
+    type: "PReLU"
+    input: "BatchNormalization_2"
+    input: "PReLU/prelu/slope"
+    output: "PReLU"
+    prelu_param {
+      base_axis: 1
+    }
+  }
+  function {
+    name: "Convolution"
+    type: "Convolution"
+    input: "PReLU"
+    input: "Convolution/conv/W"
+    input: "Convolution/conv/b"
+    output: "Convolution"
+    convolution_param {
+      pad: { dim: 1 dim: 1 }
+      stride: { dim: 1 dim: 1 }
+      dilation: { dim: 1 dim: 1 }
+      group: 1
+      channel_last: false
+      base_axis: 1
+    }
+  }
+  function {
+    name: "MaxPooling_2"
+    type: "MaxPooling"
+    input: "Convolution"
+    output: "MaxPooling_2"
+    max_pooling_param {
+      kernel: { dim: 2 dim: 2 }
+      stride: { dim: 2 dim: 2 }
+      ignore_border: true
+      pad: { dim: 0 dim: 0 }
+      channel_last: false
+    }
+  }
+  function {
+    name: "Affine"
+    type: "Affine"
+    input: "MaxPooling_2"
+    input: "Affine/affine/W"
+    input: "Affine/affine/b"
+    output: "Affine"
+    affine_param {
+      base_axis: 1
+    }
+  }
+  function {
+    name: "BatchNormalization"
+    type: "BatchNormalization"
+    input: "Affine"
+    input: "BatchNormalization/bn/beta"
+    input: "BatchNormalization/bn/gamma"
+    input: "BatchNormalization/bn/mean"
+    input: "BatchNormalization/bn/var"
+    output: "BatchNormalization"
+    batch_normalization_param {
+      axes: 1
+      decay_rate: 0.9
+      eps: 0.0001
+      batch_stat: False
+    }
+  }
+  function {
+    name: "Softmax"
+    type: "Softmax"
+    input: "BatchNormalization"
+    output: "Softmax"
+    softmax_param {
+      axis: 1
+    }
+  }
+}
+dataset {
+  name: "Training"
+  uri: "D:\\01.windows_work\\01.github\\NeuralNetworkConsole-MNIST-Sample\\03-01.nnc_train_data\\train.csv"
+  cache_dir: "D:\\01.windows_work\\01.github\\NeuralNetworkConsole-MNIST-Sample\\03-01.nnc_train_data\\train.cache"
+  overwrite_cache: true
+  create_cache_explicitly: true
+  shuffle: true
+  no_image_normalization: false
+  batch_size: 64
+}
+dataset {
+  name: "Validation"
+  uri: "D:\\01.windows_work\\01.github\\NeuralNetworkConsole-MNIST-Sample\\03-02.nnc_test_data\\test.csv"
+  cache_dir: "D:\\01.windows_work\\01.github\\NeuralNetworkConsole-MNIST-Sample\\03-02.nnc_test_data\\test.cache"
+  overwrite_cache: true
+  create_cache_explicitly: true
+  shuffle: false
+  no_image_normalization: false
+  batch_size: 64
+}
+optimizer {
+  start_iter: 0
+  end_iter: 0
+  name: "Optimizer"
+  update_interval: 1
+  network_name: "Main"
+  dataset_name: "Training"
+  solver {
+    type: "Adam"
+    weight_decay: 0
+    adam_param {
+      alpha: 0.001
+      beta1: 0.9
+      beta2: 0.999
+      eps: 1e-08
+    }
+    lr_scheduler_type: "Exponential"
+    exponential_scheduler_param {
+      gamma: 1
+      iter_interval: 937
+    }
+    lr_decay: 1
+    lr_decay_interval: 937
+    lr_warmup_scheduler_type: "None"
+  }
+  data_variable {
+    variable_name: "Input"
+    data_name: "x"
+  }
+  data_variable {
+    variable_name: "CategoricalCrossEntropy_T"
+    data_name: "y"
+  }
+  loss_variable {
+    variable_name: "CategoricalCrossEntropy"
+  }
+  parameter_variable {
+    variable_name: "DepthwiseConvolution/depthwise_conv/W"
+    learning_rate_multiplier: 1
+  }
+  parameter_variable {
+    variable_name: "DepthwiseConvolution/depthwise_conv/b"
+    learning_rate_multiplier: 1
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization_2/bn/beta"
+    learning_rate_multiplier: 1
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization_2/bn/gamma"
+    learning_rate_multiplier: 1
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization_2/bn/mean"
+    learning_rate_multiplier: 0
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization_2/bn/var"
+    learning_rate_multiplier: 0
+  }
+  parameter_variable {
+    variable_name: "PReLU/prelu/slope"
+    learning_rate_multiplier: 1
+  }
+  parameter_variable {
+    variable_name: "Convolution/conv/W"
+    learning_rate_multiplier: 1
+  }
+  parameter_variable {
+    variable_name: "Convolution/conv/b"
+    learning_rate_multiplier: 1
+  }
+  parameter_variable {
+    variable_name: "Affine/affine/W"
+    learning_rate_multiplier: 1
+  }
+  parameter_variable {
+    variable_name: "Affine/affine/b"
+    learning_rate_multiplier: 1
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization/bn/beta"
+    learning_rate_multiplier: 1
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization/bn/gamma"
+    learning_rate_multiplier: 1
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization/bn/mean"
+    learning_rate_multiplier: 0
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization/bn/var"
+    learning_rate_multiplier: 0
+  }
+}
+monitor {
+  name: "train_error"
+  network_name: "MainValidation"
+  dataset_name: "Training"
+  data_variable {
+    variable_name: "Input"
+    data_name: "x"
+  }
+  data_variable {
+    variable_name: "CategoricalCrossEntropy_T"
+    data_name: "y"
+  }
+  monitor_variable {
+    type: "Error"
+    variable_name: "CategoricalCrossEntropy"
+  }
+}
+monitor {
+  name: "valid_error"
+  network_name: "MainValidation"
+  dataset_name: "Validation"
+  data_variable {
+    variable_name: "Input"
+    data_name: "x"
+  }
+  data_variable {
+    variable_name: "CategoricalCrossEntropy_T"
+    data_name: "y"
+  }
+  monitor_variable {
+    type: "Error"
+    variable_name: "CategoricalCrossEntropy"
+  }
+}
+executor {
+  name: "Executor"
+  network_name: "MainRuntime"
+  num_evaluations: 1
+  repeat_evaluation_type: "mean"
+  need_back_propagation: false
+  no_image_normalization: false
+  data_variable {
+    variable_name: "Input"
+    data_name: "x"
+  }
+  output_variable {
+    variable_name: "Softmax"
+    data_name: "y'"
+  }
+  parameter_variable {
+    variable_name: "DepthwiseConvolution/depthwise_conv/W"
+  }
+  parameter_variable {
+    variable_name: "DepthwiseConvolution/depthwise_conv/b"
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization_2/bn/beta"
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization_2/bn/gamma"
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization_2/bn/mean"
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization_2/bn/var"
+  }
+  parameter_variable {
+    variable_name: "PReLU/prelu/slope"
+  }
+  parameter_variable {
+    variable_name: "Convolution/conv/W"
+  }
+  parameter_variable {
+    variable_name: "Convolution/conv/b"
+  }
+  parameter_variable {
+    variable_name: "Affine/affine/W"
+  }
+  parameter_variable {
+    variable_name: "Affine/affine/b"
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization/bn/beta"
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization/bn/gamma"
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization/bn/mean"
+  }
+  parameter_variable {
+    variable_name: "BatchNormalization/bn/var"
+  }
+}
